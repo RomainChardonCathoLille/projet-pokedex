@@ -1,20 +1,45 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
+
 
 <template>
-    <div>Hello world</div>
+  <div class="pokemons_container">
+    <div v-for="pokemon in pokemons">
+    <!-- <p>{{ pokemon.name }}</p> -->
+        <PokemonCard :pokemonData="pokemon"/>
+    </div>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<script>
+import axios from 'axios'
+import PokemonCard from './components/PokemonCard.vue'
+export default {
+    data() {
+        return {
+            pokemons: [],
+        };
+    },
+    created() {
+        axios.get("https://pokeapi.co/api/v2/pokemon")
+            .then((result) => {
+                let resPokemons = result.data.results;
+                for(let i = 0; i < resPokemons.length; i++){
+                    this.pokemons.push(resPokemons[i]);
+                }
+            });
+    },
+    methods: {},
+    components: { PokemonCard }
 }
+</script>
+
+<style>
+    .pokemons_container {
+        display: flex;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding-bottom: 50px;
+    }
 </style>

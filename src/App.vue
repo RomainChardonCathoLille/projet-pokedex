@@ -2,8 +2,8 @@
 import Navbar from './components/Navbar.vue';
 </script>
 <template>
-  <section id="mainContainer">
     <Navbar/>
+  <section id="mainContainer">
     <RouterView/>
   </section>
 </template>
@@ -16,12 +16,6 @@ body {
 }
 #app {
   margin: 0;
-}
-#mainContainer {
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  justify-content: center;
-  padding-top: 60px;
+  color: white;
 }
 </style>
