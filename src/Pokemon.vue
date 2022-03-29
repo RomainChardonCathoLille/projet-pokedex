@@ -1,17 +1,18 @@
 <template>
-    <div class="mainContainer">
+<!-- Conditionner affichage par v-if -->
+    <div class="mainContainer" v-if="itemsLoaded">
         <div class="mainImageContainer">
             <img :src="currentImage"/>
         </div>
         <div class="nameContainer">
-            <h1>{{ firstLetterUppercase(name) }} - N.{{ id }}</h1>
+            <h1>{{ firstLetterUppercase(pokemon.name) }} - N.{{ pokemon.id }}</h1>
         </div>
         <div class="mainInfosContainer">
             <div class="mainInfoItem">
-                Weight: {{ weight }}kg
+                Weight: {{ pokemon.weight/10 }}kg
             </div>
             <div class="mainInfoItem">
-                Height: {{ height }}cm
+                Height: {{ pokemon.height/10 }}m
             </div>
         </div>
     </div>
@@ -24,11 +25,8 @@ export default {
     data() {
         return {
             pokemon: {},
+            itemsLoaded: false,
             currentImage: "",
-            name: '',
-            pokemonId: null,
-            weight: 0,
-            height: 0,
         };
     },
     props: {
@@ -44,10 +42,7 @@ export default {
         let pokemonImage = this.pokemon.sprites.other["official-artwork"]["front_default"];
         // this.currentImage = this.pokemon.sprites.other.official-artwork.front_default;
         this.currentImage = pokemonImage;
-        this.name = this.pokemon.name;
-        this.weight = this.pokemon.weight/10;
-        this.height = this.pokemon.height*10;
-        console.log(this.pokemon.weight/10)
+        this.itemsLoaded = true;
     },
     methods: {
         firstLetterUppercase(string){
