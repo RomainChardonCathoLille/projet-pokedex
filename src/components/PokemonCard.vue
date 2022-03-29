@@ -3,7 +3,7 @@
 <template>
     <div class="pokemonCard" @click="chargerPageDetails">
         <div class="cardImageZone">
-            <img :src="pokemonInfos.sprites.front_default"/>
+            <img :src="pokemonImage"/>
         </div>
         <div class="nameZone">
             <p>{{ pokemonInfos.name }}</p>
@@ -17,7 +17,8 @@ import axios from "axios";
 export default {
     data() {
         return {
-            pokemonInfos: {sprites: {front_default : ''}},
+            pokemonInfos: {},
+            pokemonImage: '',
         };
     },
     props: {
@@ -35,6 +36,7 @@ export default {
             this.pokemonInfos.url = url;
             this.$store.commit("setPokemon", res.data);
         }
+        this.pokemonImage = this.pokemonInfos.sprites.other["official-artwork"]["front_default"];
     },
 
     methods: {

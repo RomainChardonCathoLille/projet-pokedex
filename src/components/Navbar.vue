@@ -1,8 +1,8 @@
 <template>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-light navbar-expand-sm bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand me-2" href="">
+    <a class="navbar-brand me-2" @click="loadHomePage">
       <img
         src="https://www.nicepng.com/png/full/12-124701_pokeball-png.png"
         height="16"
@@ -11,6 +11,9 @@
         id="navbarLogo"
       />
     </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
@@ -37,6 +40,13 @@
         data(){
             return {}
         },
+        methods: {
+          loadHomePage(){
+            this.$router.push({
+                path: `/`
+            });
+          }
+        }
     });
 </script>
 
@@ -44,5 +54,6 @@
     #navbarLogo {
         margin-top: -1px;
         width: 30px;
+        cursor: pointer;
     }
 </style>

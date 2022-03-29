@@ -14,7 +14,6 @@ import PokemonCard from './components/PokemonCard.vue'
 export default {
     data() {
         return {
-            // pokemons: [],
         };
     },
     computed: {
