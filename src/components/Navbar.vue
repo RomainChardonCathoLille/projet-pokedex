@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
+    <a class="navbar-brand me-2" href="">
       <img
         src="https://www.nicepng.com/png/full/12-124701_pokeball-png.png"
         height="16"
