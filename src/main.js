@@ -12,6 +12,7 @@ const store = createStore({
         return {
             pokemons: [],
             pokemonsCompleteData: [],
+            homepageMainApiNextCall: "",
         }
     },
     getters: {
@@ -21,7 +22,8 @@ const store = createStore({
         },
         checkIfDataComplete: (state) => (index) => {
             return state.pokemonsCompleteData[index-1];
-        }
+        },
+        getNextHomepageApiCall: (state) => state.homepageMainApiNextCall,
     },
     mutations: {
         addPokemon(state, pokemon){
@@ -32,6 +34,9 @@ const store = createStore({
             let id = parseInt(pokemonData.id) - 1;
             state.pokemons[id] = pokemonData;
             state.pokemonsCompleteData[id] = true;
+        },
+        setHomepageMainApiNextCall(state, url){
+            state.homepageMainApiNextCall = url;
         }
     }
 });

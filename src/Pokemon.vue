@@ -61,6 +61,7 @@ export default {
         margin-right: auto;
         width: 80%;
         min-width: 250px;
+        max-width: 1100px;
 
         background: rgba( 255, 255, 255, 0.15 );
         box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );

@@ -3,7 +3,7 @@
 <template>
   <div class="pokemons_container">
     <div v-for="pokemon in pokemons">
-        <PokemonCard :pokemonData="pokemon"/>
+        <PokemonCard :pokemonData="pokemon" v-if="pokemon != undefined"/>
     </div>
   </div>
 </template>
@@ -26,18 +26,41 @@ export default {
         axios.get("https://pokeapi.co/api/v2/pokemon")
             .then((result) => {
                 let resPokemons = result.data.results;
+                let nextApiCall = result.data.next;
                 for(let i = 0; i < resPokemons.length; i++){
                     let url = resPokemons[i].url;
                     let lastSlashPosition = url.lastIndexOf('/');
                     let id = parseInt(url.substring(lastSlashPosition+1));
-                    // this.pokemons.push(resPokemons[i]);
-                    // if(this.$store.getters.checkIfDataComplete[id] != null && this.$store.getters.checkIfDataComplete[id]== false){
-                        this.$store.commit('addPokemon', resPokemons[i]);
-                    // }
+                    this.$store.commit('addPokemon', resPokemons[i]);
+                    this.$store.commit('setHomepageMainApiNextCall', nextApiCall);
                 }
             });
+            this.getNextPokemons();
     },
-    methods: {},
+    methods: {
+        getNextPokemons(){
+            window.onscroll = async () => {
+                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+                if(bottomOfWindow){
+                    if(this.$store.getters.getNextHomepageApiCall != undefined){
+                        let res = await axios.get(this.$store.getters.getNextHomepageApiCall);
+                        if(res != undefined && res != null){
+                            let resPokemons = res.data.results;
+                            let nextApiCall = res.data.next;
+
+                            for(let i = 0; i < resPokemons.length; i++){
+                                let url = resPokemons[i].url;
+                                let lastSlashPosition = url.lastIndexOf('/');
+                                let id = parseInt(url.substring(lastSlashPosition+1));
+                                this.$store.commit("addPokemon", resPokemons[i]);
+                            }
+                            this.$store.commit('setHomepageMainApiNextCall', nextApiCall);
+                        }
+                    }
+                } 
+            }
+        }
+    },
     components: { PokemonCard }
 }
 </script>
