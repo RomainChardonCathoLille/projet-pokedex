@@ -15,6 +15,12 @@
                 Height: {{ pokemon.height/10 }}m
             </div>
         </div>
+        <div class="statsContainer"  style="overflow-x: hidden;">
+            <div class="statBar" v-for="stat in pokemon.stats" style="width:50%; float:left;margin-left:auto;margin-right:auto;">
+                {{ stat.base_stat }} {{ firstLetterUppercase(stat.stat.name) }} <br>
+                <progress :value="stat.base_stat" max="300"></progress>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -25,6 +31,7 @@ export default {
     data() {
         return {
             pokemon: {},
+            pokemonStats: [],
             itemsLoaded: false,
             currentImage: "",
         };
@@ -43,6 +50,9 @@ export default {
         // this.currentImage = this.pokemon.sprites.other.official-artwork.front_default;
         this.currentImage = pokemonImage;
         this.itemsLoaded = true;
+        for(let i = 0; i < this.pokemon.stats.length; i++){
+            this.pokemonStats.push(this.pokemon.stats[i]);
+        }
     },
     methods: {
         firstLetterUppercase(string){
