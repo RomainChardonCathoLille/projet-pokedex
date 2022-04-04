@@ -15,11 +15,14 @@
                 Height: {{ pokemon.height/10 }}m
             </div>
         </div>
-        <div class="statsContainer"  style="overflow-x: hidden;">
-            <div class="statBar" v-for="stat in pokemon.stats" style="width:50%; float:left;margin-left:auto;margin-right:auto;">
+        <div class="statsContainer"  style="overflow-x: hidden; margin-top: 10px;">
+        <div class="stat" v-for="stat in pokemon.stats" style="">
+            <div class="statBar"  style="float:left;margin-left:auto;margin-right:auto;">
                 {{ stat.base_stat }} {{ firstLetterUppercase(stat.stat.name) }} <br>
                 <progress :value="stat.base_stat" max="300"></progress>
             </div>
+        </div>
+            
         </div>
     </div>
 </template>
@@ -110,5 +113,22 @@ export default {
         width: 50%;
         float: left;
         text-align: center;
+    }
+    .stat {
+        overflow: hidden;
+        width: 50%;
+        float: left;
+        display: flex;
+    }
+    progress {
+        box-sizing: 5px;
+    }
+    progress::-webkit-progress-bar {
+        background-color: #595150;
+        border-radius: 5px;
+    }
+    progress::-webkit-progress-value {
+        background-color: #163b94;
+        border-radius: 5px;
     }
 </style>

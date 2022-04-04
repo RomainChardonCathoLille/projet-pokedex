@@ -30,7 +30,6 @@ export default {
                 for(let i = 0; i < resPokemons.length; i++){
                     let url = resPokemons[i].url;
                     let lastSlashPosition = url.lastIndexOf('/');
-                    let id = parseInt(url.substring(lastSlashPosition+1));
                     this.$store.commit('addPokemon', resPokemons[i]);
                     this.$store.commit('setHomepageMainApiNextCall', nextApiCall);
                 }
