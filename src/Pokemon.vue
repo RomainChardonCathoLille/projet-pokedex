@@ -26,6 +26,11 @@
                 </div>
             </div>
         </div>
+        <div class="typesContainer">
+            <div class="type" v-for="pokemonType in pokemon.types">
+                {{ pokemonType.type.name }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -86,6 +91,7 @@ export default {
                 this.pokemonSprites.push(spriteObject);
             }
         }
+        console.log(this.pokemon.types);
     },
     methods: {
         firstLetterUppercase(string){
@@ -170,11 +176,30 @@ export default {
         border-radius: 5px;
     }
     progress::-webkit-progress-value {
-        background-color: #163b94;
+        background-image: linear-gradient(to right bottom, #840909, #7e0025, #6b003d, #490050, #020e5a);
         border-radius: 5px;
     }
     .pokemonSelect {
         width: 100%;
         color: black;
+    }
+    .typesContainer {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .type {
+        float: left;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 80px;
+        background-image: linear-gradient(to right bottom, #540389, #93007b, #c10061, #de0042, #eb1818);
+        text-align: center;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        border-radius: 5px;
     }
 </style>
