@@ -3,6 +3,9 @@
     <div class="mainContainer" v-if="itemsLoaded">
         <div class="mainImageContainer">
             <img :src="currentImage"/>
+            <select class="pokemonSelect" name="pokemonSpriteChoice" @change="changePokemonSprite($event)">
+                <option v-for="sprite in pokemonSprites" :value="sprite.name" >{{ firstLetterUppercase(removeUnderScores(sprite.name)) }}</option>
+            </select>
         </div>
         <div class="nameContainer">
             <h1>{{ firstLetterUppercase(pokemon.name) }} - N.{{ pokemon.id }}</h1>
@@ -16,13 +19,12 @@
             </div>
         </div>
         <div class="statsContainer"  style="overflow-x: hidden; margin-top: 10px;">
-        <div class="stat" v-for="stat in pokemon.stats" style="">
-            <div class="statBar"  style="float:left;margin-left:auto;margin-right:auto;">
-                {{ stat.base_stat }} {{ firstLetterUppercase(stat.stat.name) }} <br>
-                <progress :value="stat.base_stat" max="300"></progress>
+            <div class="stat" v-for="stat in pokemon.stats" style="">
+                <div class="statBar"  style="float:left;margin-left:auto;margin-right:auto;">
+                    {{ stat.base_stat }} {{ firstLetterUppercase(stat.stat.name) }} <br>
+                    <progress :value="stat.base_stat" max="300"></progress>
+                </div>
             </div>
-        </div>
-            
         </div>
     </div>
 </template>
@@ -35,6 +37,8 @@ export default {
         return {
             pokemon: {},
             pokemonStats: [],
+            pokemonSprites: [],
+            currentSprite: '',
             itemsLoaded: false,
             currentImage: "",
         };
@@ -50,16 +54,54 @@ export default {
         }
         console.log(this.pokemon);
         let pokemonImage = this.pokemon.sprites.other["official-artwork"]["front_default"];
+        let defaultPokemonImageObject = {
+            name: 'default',
+            url: pokemonImage
+        }
+        this.pokemonSprites.push(defaultPokemonImageObject);
+        this.currentSprite = 'default';
         // this.currentImage = this.pokemon.sprites.other.official-artwork.front_default;
         this.currentImage = pokemonImage;
         this.itemsLoaded = true;
         for(let i = 0; i < this.pokemon.stats.length; i++){
             this.pokemonStats.push(this.pokemon.stats[i]);
         }
+        for(const sprite in this.pokemon.sprites){
+            if(this.pokemon.sprites[sprite] != null){
+                if(sprite != 'other' && sprite != 'versions'){
+                    let spriteObject = {
+                        name: sprite,
+                        url: this.pokemon.sprites[sprite],
+                    };
+                    this.pokemonSprites.push(spriteObject);
+                }
+            }
+        }
+        for(const sprite in this.pokemon.sprites.other.home){
+            if(this.pokemon.sprites.other.home[sprite] != null){
+                let spriteObject = {
+                    name: `home_${sprite}`,
+                    url: this.pokemon.sprites.other.home[sprite],
+                }
+                this.pokemonSprites.push(spriteObject);
+            }
+        }
     },
     methods: {
         firstLetterUppercase(string){
             return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+        removeUnderScores(string){
+            return string.replaceAll('_', ' ');
+        },
+        changePokemonSprite(event){
+            let spriteName = event.target.value;
+            this.pokemonSprites.forEach(sprite => {
+                if(sprite.name === spriteName){
+                    this.currentSprite = sprite.name;
+                    this.currentImage = sprite.url;
+                }
+            });
         },
     },
 }
@@ -130,5 +172,9 @@ export default {
     progress::-webkit-progress-value {
         background-color: #163b94;
         border-radius: 5px;
+    }
+    .pokemonSelect {
+        width: 100%;
+        color: black;
     }
 </style>
