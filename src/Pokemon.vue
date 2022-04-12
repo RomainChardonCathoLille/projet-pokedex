@@ -57,7 +57,6 @@ export default {
             let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
             this.pokemon = res.data;
         }
-        console.log(this.pokemon);
         let pokemonImage = this.pokemon.sprites.other["official-artwork"]["front_default"];
         let defaultPokemonImageObject = {
             name: 'default',
@@ -91,7 +90,6 @@ export default {
                 this.pokemonSprites.push(spriteObject);
             }
         }
-        console.log(this.pokemon.types);
     },
     methods: {
         firstLetterUppercase(string){
@@ -176,7 +174,7 @@ export default {
         border-radius: 5px;
     }
     progress::-webkit-progress-value {
-        background-image: linear-gradient(to right bottom, #840909, #7e0025, #6b003d, #490050, #020e5a);
+        background-color: green;
         border-radius: 5px;
     }
     .pokemonSelect {

@@ -21,7 +21,7 @@
           <a class="nav-link active" aria-current="page" href="#">Pokémons</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#">Berries</a>
+            <a class="nav-link disabled" href="#">Items</a>
         </li>
         <li class="nav-item">
             <a class="nav-link disabled" href="#">Machines</a>

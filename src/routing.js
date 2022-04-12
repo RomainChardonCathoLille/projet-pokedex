@@ -13,6 +13,7 @@ const routes = [
         component: Pokemon,
         props: true,
     },
+    // Tout ce qui n'est pas compris dans les deux premières routes
     {
         path: '/:pathMatch(.*)*',
         component: Home,

@@ -41,7 +41,6 @@ export default {
 
     methods: {
         chargerPageDetails(){
-            console.log(this.pokemonInfos.id);
             this.$router.push({
                 path: `/pokemon/${this.pokemonInfos.id}`
             });
