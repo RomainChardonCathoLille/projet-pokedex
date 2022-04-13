@@ -53,9 +53,14 @@ export default {
     },
     async mounted(){
         this.pokemon = this.$store.getters.getPokemonByIndex(this.id);
+        // Renvoie sur la page principale si erreur
         if(this.pokemon == null){
-            let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
-            this.pokemon = res.data;
+            try {
+                let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
+                this.pokemon = res.data;
+            } catch {
+                this.$router.push({name: `ErrorPage`});
+            }            
         }
         let pokemonImage = this.pokemon.sprites.other["official-artwork"]["front_default"];
         let defaultPokemonImageObject = {
@@ -64,7 +69,6 @@ export default {
         }
         this.pokemonSprites.push(defaultPokemonImageObject);
         this.currentSprite = 'default';
-        // this.currentImage = this.pokemon.sprites.other.official-artwork.front_default;
         this.currentImage = pokemonImage;
         this.itemsLoaded = true;
         for(let i = 0; i < this.pokemon.stats.length; i++){

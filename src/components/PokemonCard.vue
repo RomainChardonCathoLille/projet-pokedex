@@ -1,5 +1,3 @@
-
-
 <template>
     <div class="pokemonCard" @click="chargerPageDetails">
         <div class="cardImageZone">

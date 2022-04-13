@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="pokemons_container">
     <div v-for="pokemon in pokemons">
@@ -28,8 +26,6 @@ export default {
                 let resPokemons = result.data.results;
                 let nextApiCall = result.data.next;
                 for(let i = 0; i < resPokemons.length; i++){
-                    let url = resPokemons[i].url;
-                    let lastSlashPosition = url.lastIndexOf('/');
                     this.$store.commit('addPokemon', resPokemons[i]);
                     this.$store.commit('setHomepageMainApiNextCall', nextApiCall);
                 }

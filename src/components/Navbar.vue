@@ -18,7 +18,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Pokémons</a>
+          <a class="nav-link active" aria-current="page" @click="loadHomePage">Pokémons</a>
         </li>
         <li class="nav-item">
             <a class="nav-link disabled" href="#">Items</a>
