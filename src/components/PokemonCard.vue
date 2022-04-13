@@ -1,7 +1,13 @@
 <template>
     <div class="pokemonCard" @click="chargerPageDetails">
-        <div class="cardImageZone">
-            <img :src="pokemonImage"/>
+        <div class="cardImageZone" >
+            <img :src="pokemonImage" v-if="loaded"/>
+            <fingerprint-spinner
+              :animation-duration="1500"
+              :size="64"
+              color="#ee8329"
+              v-if="loaded == false"
+            />
         </div>
         <div class="nameZone">
             <p>{{ pokemonInfos.name }}</p>
@@ -11,12 +17,14 @@
 
 <script>
 import axios from "axios";
+import { FingerprintSpinner } from 'epic-spinners'
 
 export default {
     data() {
         return {
             pokemonInfos: {},
             pokemonImage: '',
+            loaded: false,
         };
     },
     props: {
@@ -35,15 +43,21 @@ export default {
             this.$store.commit("setPokemon", res.data);
         }
         this.pokemonImage = this.pokemonInfos.sprites.other["official-artwork"]["front_default"];
+        this.loaded = true;
     },
 
     methods: {
         chargerPageDetails(){
-            this.$router.push({
+            if(this.loaded){
+                this.$router.push({
                 path: `/pokemon/${this.pokemonInfos.id}`
             });
+            }
         }
     },
+    components: {
+        FingerprintSpinner
+    }
 }
 </script>
 <style>
@@ -83,6 +97,8 @@ export default {
         height: 80%;
         justify-content: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        align-items: center;
+        overflow: hidden;
         /* background-color: #dbdbdb; */
     }
     .nameZone {

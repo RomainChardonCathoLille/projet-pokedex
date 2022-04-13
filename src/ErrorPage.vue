@@ -14,7 +14,7 @@ export default {
                 path: `/`
             });
         }
-    }
+    },
 }
 </script>
 
