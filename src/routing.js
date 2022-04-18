@@ -6,10 +6,12 @@ import ErrorPage from './ErrorPage.vue'
 
 const routes = [
     {
+        // Homepage
         path: '/',
         component: Home,
     },
     {
+        // Détail d'un pokémon. Props true pour passer l'id du pokémon
         path: '/pokemon/:id',
         component: Pokemon,
         props: true,

@@ -2,6 +2,7 @@
     <div class="errorZone">
         <h1>Page not found :(</h1><div class="sep"></div>
         <p>You have reached the boundaries of the internet. It is not safe here.</p><div class="sep"></div>
+        <!-- appeler la fonction backToHomePage lorsqu'on clique sur la balise <a> -->
         <p>It's a dangerous place here. <a class="homePageLink" @click="backToHomePage">Let's get back to home page</a> </p>
     </div>
 </template>
@@ -10,6 +11,7 @@
 export default {
     methods: {
         backToHomePage(){
+            // Renvoie l'utilisateur sur la home page
             this.$router.push({
                 path: `/`
             });

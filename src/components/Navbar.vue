@@ -37,11 +37,9 @@
     import { defineComponent } from "vue";
 
     export default defineComponent({
-        data(){
-            return {}
-        },
         methods: {
           loadHomePage(){
+            // Remet l'utilisateur sur la page d'accueil
             this.$router.push({
                 path: `/`
             });

@@ -1,7 +1,10 @@
 <template>
+<!-- @click sert à appeler la fonction "chargerPageDetails()" -->
     <div class="pokemonCard" @click="chargerPageDetails">
         <div class="cardImageZone" >
+            <!-- Affiche l'image si l'objet pokemon est chargé -->
             <img :src="pokemonImage" v-if="loaded"/>
+            <!-- Module loading spinner avec couleur, taille, et durée de l'animation + condition d'affichage si la carte n'est pas chargée -->
             <fingerprint-spinner
               :animation-duration="1500"
               :size="64"
@@ -21,6 +24,7 @@ import { FingerprintSpinner } from 'epic-spinners'
 
 export default {
     data() {
+        // objet JSON avec les infos du pokémon + lien de l'image a afficher sur la carte + variable qui sert à déterminer si le JSON est chargé ou non
         return {
             pokemonInfos: {},
             pokemonImage: '',
@@ -28,20 +32,26 @@ export default {
         };
     },
     props: {
+        // Info du pokémon à afficher envoyé par la page principale
         pokemonData: Object
     },
+    // Executé lors du chargement du component (async car on attend le chargement de l'objet pokemon dans le code)
     async mounted() {
+        // Récupération de l'id du pokémon (pour le lien de la page détails)
         let url = this.pokemonData.url;
         let lastSlashPosition = url.lastIndexOf('/');
         let id = parseInt(url.substring(lastSlashPosition+1));
+        // Verifie si le pokémon est présent dans le store
         if(this.$store.getters.checkIfDataComplete(id)){
             this.pokemonInfos = this.$store.getters.getPokemonByIndex(id);
         } else {
+            // Récupération du pokémon par l'api si ce dernier n'est pas dans le store + ajout dans le store de ce dernier (await pour attendre le chargement)
             let res = await axios.get(this.pokemonData.url);
             this.pokemonInfos = res.data;
             this.pokemonInfos.url = url;
             this.$store.commit("setPokemon", res.data);
         }
+        // Indique au code le lien de l'image à afficher + indique que le chargement est effectué
         this.pokemonImage = this.pokemonInfos.sprites.other["official-artwork"]["front_default"];
         this.loaded = true;
     },
@@ -49,12 +59,14 @@ export default {
     methods: {
         chargerPageDetails(){
             if(this.loaded){
+                // Envoie l'utilisateur sur la page détails du pokémon correspondant à la carte affichée
                 this.$router.push({
                 path: `/pokemon/${this.pokemonInfos.id}`
             });
             }
         }
     },
+    // Loading spinner
     components: {
         FingerprintSpinner
     }

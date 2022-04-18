@@ -2,8 +2,10 @@
 import Navbar from './components/Navbar.vue';
 </script>
 <template>
+<!-- Affichage de la navbar -->
     <Navbar/>
   <section id="mainContainer">
+    <!-- Affichage de la page en cours de visualisation (Home.vue par défaut) -->
     <RouterView/>
   </section>
 </template>
