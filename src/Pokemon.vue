@@ -1,32 +1,40 @@
 <template>
-<!-- Conditionner affichage par v-if -->
+<!-- Afficher carte si la data est chargée -->
     <div class="mainContainer" v-if="itemsLoaded">
         <div class="mainImageContainer">
             <img :src="currentImage"/>
+            <!-- Appelle la fonction changePokemonSprite quand on utilise le select -->
             <select class="pokemonSelect" name="pokemonSpriteChoice" @change="changePokemonSprite($event)">
+            <!-- Ajout d'une option pour chaque image enregistrée dans pokemonSprites -->
                 <option v-for="sprite in pokemonSprites" :value="sprite.name" >{{ firstLetterUppercase(removeUnderScores(sprite.name)) }}</option>
             </select>
         </div>
         <div class="nameContainer">
+            <!-- met la première lettre du nom du pokémon en majuscule et affiche son ID -->
             <h1>{{ firstLetterUppercase(pokemon.name) }} - N.{{ pokemon.id }}</h1>
         </div>
         <div class="mainInfosContainer">
             <div class="mainInfoItem">
+                <!-- Affiche le poids du pokémon en KG -->
                 Weight: {{ pokemon.weight/10 }}kg
             </div>
             <div class="mainInfoItem">
+                <!-- Affiche la taille du pokémon en m -->
                 Height: {{ pokemon.height/10 }}m
             </div>
         </div>
         <div class="statsContainer"  style="overflow-x: hidden; margin-top: 10px;">
+            <!-- Affiche toutes les stats du pokémon avec le nom en majuscule -->
             <div class="stat" v-for="stat in pokemon.stats" style="">
                 <div class="statBar"  style="float:left;margin-left:auto;margin-right:auto;">
                     {{ stat.base_stat }} {{ firstLetterUppercase(stat.stat.name) }} <br>
+                    <!-- Valeur de la stat définie par l'objet JSON -->
                     <progress :value="stat.base_stat" max="300"></progress>
                 </div>
             </div>
         </div>
         <div class="typesContainer">
+            <!-- Affichage de tous les types du pokémon -->
             <div class="type" v-for="pokemonType in pokemon.types">
                 {{ pokemonType.type.name }}
             </div>
@@ -49,11 +57,14 @@ export default {
         };
     },
     props: {
+        // ID passé en paramètre
         id: String,
     },
+    // async pour attendre le chargement de la data
     async mounted(){
+        // Cherche le pokémon dans le store
         this.pokemon = this.$store.getters.getPokemonByIndex(this.id);
-        // Renvoie sur la page principale si erreur
+        // Si le pokémon n'est pas dans le store, on le cherche dans l'API, s'il est toujours introuvable, on renvoie l'utilisateur sur la page d'erreur dans un try catch
         if(this.pokemon == null){
             try {
                 let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
@@ -62,18 +73,22 @@ export default {
                 this.$router.push({name: `ErrorPage`});
             }            
         }
+        // Image affichée par défaut
         let pokemonImage = this.pokemon.sprites.other["official-artwork"]["front_default"];
         let defaultPokemonImageObject = {
             name: 'default',
             url: pokemonImage
         }
+        // Ajout de l'image dans la liste des options d'image a choisir
         this.pokemonSprites.push(defaultPokemonImageObject);
         this.currentSprite = 'default';
         this.currentImage = pokemonImage;
         this.itemsLoaded = true;
+        // Ajout de toutes les stats dans la liste des stats
         for(let i = 0; i < this.pokemon.stats.length; i++){
             this.pokemonStats.push(this.pokemon.stats[i]);
         }
+        // Ajout des autres sprites dans la liste de sprite
         for(const sprite in this.pokemon.sprites){
             if(this.pokemon.sprites[sprite] != null){
                 if(sprite != 'other' && sprite != 'versions'){
@@ -96,12 +111,15 @@ export default {
         }
     },
     methods: {
+        // Renvoie un texte avec la première lettre en majuscule
         firstLetterUppercase(string){
             return string.charAt(0).toUpperCase() + string.slice(1);
         },
+        // Supprime tous les underscores d'un texte
         removeUnderScores(string){
             return string.replaceAll('_', ' ');
         },
+        // Change l'image affichée du pokémon
         changePokemonSprite(event){
             let spriteName = event.target.value;
             this.pokemonSprites.forEach(sprite => {
