@@ -1,7 +1,18 @@
-# Vue 3 + Vite
+# Projet pokédex
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Comment run le projet ?
 
-## Recommended IDE Setup
+Pour commencer, il faut utiliser la commande
+`npm i` pour installer les dépendences du projet. Cette étape ne se fait qu'une fois.
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+Ensuite, à chaque fois que vous voulez lancer un serveur hébergeant le site, il faut utiliser la commande `npm run dev`.
+
+## Dépendences
+
+Ce projet utilise certaines dépendences:
+
+* epic-spinners: bibliothèque de composants servant a afficher des loading spinners.
+* axios pour ce qui touche à la communication avec l'API.
+* vue-router pour tout ce qui touche au routing de l'application.
+
+Il n'y a pas d'autre dépendences au projet.
