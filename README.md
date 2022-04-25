@@ -15,4 +15,4 @@ Ce projet utilise certaines dépendences:
 * axios pour ce qui touche à la communication avec l'API.
 * vue-router pour tout ce qui touche au routing de l'application.
 
-Il n'y a pas d'autre dépendences au projet.
+Il n'y a pas d'autre dépendences au projet. test
